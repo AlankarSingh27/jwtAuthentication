@@ -1,36 +1,25 @@
-import {REACT_APP_JWT_TOKEN} from "../constants";
+
+
+import {  Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
 
 export class TokenUtil {
 
     public static saveToken(token: string) {
-        if (REACT_APP_JWT_TOKEN) {
-             sessionStorage.setItem(REACT_APP_JWT_TOKEN, token);
-
-        }
+        cookies.set('jwtToken', token, { path: '/' });
     }
 
     public static getToken() {
-     return  sessionStorage.getItem(REACT_APP_JWT_TOKEN);
-
+        return cookies.get('jwtToken');
     }
 
     public static deleteToken() {
-       sessionStorage.removeItem(REACT_APP_JWT_TOKEN);
-
+        cookies.remove('jwtToken', { path: '/' });
     }
 
     public static isLoggedIn() {
-         let token = localStorage.getItem(REACT_APP_JWT_TOKEN);
-
-
-        /*
-             if (token) {
-                return true;
-            } else {
-                return false;
-            }
-         */
+        const token = cookies.get('jwtToken');
         return !!token;
-
     }
 }
